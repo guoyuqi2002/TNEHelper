@@ -1,0 +1,22 @@
+# build artifacts
+build/bin/
+frontend/dist/
+*.exe
+
+# dependencies
+node_modules/
+vendor/
+
+# runtime data (task state, downloaded attachments, databases, cookies)
+tne-helper-data/
+*.db
+*.db-shm
+*.db-wal
+cookies*.json
+
+# misc
+*.xml
+*.csv
+.DS_Store
+/profile/
+.env
