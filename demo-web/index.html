@@ -1,17 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Expense Reimbursement Checker</title>
-  <!-- load Vue 3 -->
-  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-  <!-- load Element Plus -->
-  <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
-  <script src="https://unpkg.com/element-plus/dist/index.full.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workday Expense &amp; Invoice Assistant</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <script defer src="./src/reconcile.js"></script>
+  <script defer src="./src/main.js"></script>
 </head>
 <body>
-  <div id="app"></div>
-  <script type="module" src="./src/main.js"></script>
+  <main class="workspace">
+    <header class="page-header">
+      <h1>Expense &amp; Invoice Assistant</h1>
+      <p>Compare reimbursement claims with invoice records, review exceptions and export a reconciliation log. The local demo starts from structured records.</p>
+    </header>
+
+    <section class="panel" aria-labelledby="batch-title">
+      <h2 id="batch-title">Reconciliation batch</h2>
+      <div class="actions">
+        <button type="button" id="load-sample" class="primary">Load sample batch</button>
+        <label class="file-control" for="batch-file">Import JSON batch</label>
+        <input id="batch-file" type="file" accept=".json,application/json">
+        <button type="button" id="export" disabled>Export CSV</button>
+      </div>
+      <p id="status" role="status">Load the synthetic sample or import a batch to begin.</p>
+      <p id="import-error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section id="results" class="panel" aria-labelledby="results-title" hidden>
+      <h2 id="results-title">Match results</h2>
+      <p id="batch-summary"></p>
+      <div class="table-scroll" tabindex="0" aria-label="Expense results table">
+        <table>
+          <thead><tr><th scope="col">Expense</th><th scope="col">Invoice</th><th scope="col">Claimed</th><th scope="col">Match result</th><th scope="col">Review</th></tr></thead>
+          <tbody id="result-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="review" class="panel" aria-labelledby="review-title" hidden>
+      <h2 id="review-title" tabindex="-1"></h2>
+      <dl id="evidence"></dl>
+      <p id="guidance"></p>
+      <form id="review-form">
+        <label for="decision">Review decision</label>
+        <select id="decision" required>
+          <option value="">Choose a decision</option>
+          <option value="Approved after review">Approve after review</option>
+          <option value="Needs correction">Needs correction</option>
+          <option value="Escalated">Escalate</option>
+        </select>
+        <label for="review-note">Reason for decision</label>
+        <textarea id="review-note" rows="2" maxlength="500" required></textarea>
+        <div class="actions">
+          <button type="submit" class="primary">Save review</button>
+        </div>
+      </form>
+      <p id="review-status" role="status"></p>
+    </section>
+  </main>
 </body>
 </html>

@@ -24,8 +24,8 @@ tax-bureau-issued invoices, and exports ready-to-review Excel workbooks.
   number and verifies amounts exactly with `math/big.Rat`.
 - **Excel generation** — typed, code-generated sheet definitions
   (`pkg/sheets`) produce matched/unmatched workbooks with per-type sheets.
-- **Demo web app** — a Vue 3 + Element Plus mock-up of the workflow used for
-  stakeholder demonstrations (`demo-web/`).
+- **Offline demo web app** — an interactive reconciliation and review workspace for
+  synthetic examples and local JSON import (`demo-web/`).
 
 ## Architecture
 
@@ -51,7 +51,7 @@ download (chromedp)  ->  deduplicate (MD5)  ->  recognize (PDF/OFD + OCR)
 
 ```
 app/        Wails v2 desktop application (Go backend + Vue 3 frontend)
-demo-web/   Standalone Vue 3 + Element Plus demo of the workflow
+demo-web/   Standalone offline browser demo from synthetic or local JSON records
 ```
 
 ## Build & run (app)
@@ -79,14 +79,11 @@ Copy `app/.env.example` and export the variables before running:
 | `WORKDAY_TASK_URL` | Workday task URL used to look up expense reports |
 | `KNOWN_PURCHASER_KEYWORD` | Optional buyer-name keyword for classifying unmatched VAT invoices |
 
-## Build & run (demo-web)
+## Run the offline demo
 
-```bash
-cd demo-web
-npm install
-npm run dev
-```
+Open demo-web/index.html directly in a browser and select **Load sample batch**. The demo starts from structured invoice and expense records. It can match by invoice number and exact amount, present the evidence for exceptions, save a review decision for the current session and export the results as CSV.
 
+The demo requires no credentials or external services. The desktop integration above is the path for real tenant access and invoice recognition. See demo-web/README.md for the local JSON import format.
 ## Data & confidentiality
 
 This repository contains **no client data**. Credentials, tenant URLs, client
